@@ -1,0 +1,23 @@
+<h1>EDIT?</h1>
+
+<div>
+  <form action="/gallery/{{id}}?_method=PUT" method="POST">
+      title:<br>
+      <input type="text" name="name" value="{{title}}"><br>
+
+      author:<br>
+      <input type="text" name="author" value="{{author}}" ><br>
+
+      link:<br>
+      <input type="text" name="link" value="{{link}}"><br><br>
+      <input type="submit" value="Submit">
+  </form>
+
+  <form action="/gallery/{{id}}?_method=DELETE" method="POST">
+       <input type="submit" value="delete">
+  </form>
+
+  <form action="/gallery" method="GET">
+       <input type="submit" value="view all products">
+  </form>
+</div>
