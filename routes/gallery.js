@@ -5,7 +5,6 @@ const Photo = db.Photo;
 
 router.route('/gallery/new')
   .get( (req, res) => {
-    console.log('gibberish');
     res.render('new');
   });
 
@@ -33,7 +32,7 @@ router.route('/gallery')
     })
       .then( (data) => {
         console.log(data);
-        res.end();
+        res.redirect('/gallery');
       })
       .catch( (err) => {
         console.log(err);
@@ -65,11 +64,12 @@ router.route('/gallery/:id')
     })
     .then( (data) => {
       console.log('Updated photo');
-      res.end();
     })
     .catch( (err) => {
       console.log(err);
     });
+    res.redirect(`/gallery/${parseInt(req.params.id)}/edit`);
+    res.end();
   })
 // Delete Photo
   .delete( (req, res) => {
@@ -79,6 +79,8 @@ router.route('/gallery/:id')
       }
     })
     .then( (data) => {
+      console.log('Deleted photo');
+      res.redirect('/');
       res.end();
     })
     .catch( (err) => {
