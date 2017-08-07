@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Express Gallery</title>
+</head>
+<body>
+{{#with photo}}
+<h1>photo.hbs</h1>
+  <div class='gallery'>
+
+  <img src="{{link}}" alt=""><BR>
+  <p>Author: {{author}}</p>
+  <p>Description: {{description}}</p>
+    <form action="/gallery/{{id}}" method="POST">
+      <label form="delete"></label>
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete">
+    </form>
+
+    <form action="/gallery/{{id}}" method="POST">
+      <label form="delete"></label>
+      <input type="hidden" name="_method" value="PUT">
+      <input type="submit" value="Edit">
+    </form>
+  </div>
+  {{/with}}
+</body>
+</html>

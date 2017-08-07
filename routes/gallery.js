@@ -5,35 +5,80 @@ const Photo = db.Photo;
 
 router.route('/gallery/new')
   .get( (req, res) => {
-    console.log('new');
-    res.render('/new');
+    console.log('gibberish');
+    res.render('new');
   });
 
 
 // Get/view gallery
 router.route('/')
-.get( (req, res) => {
-  Photo.findAll()
-    .then( (gallery) => {
-      console.log(gallery);
-      res.render('index', {gallery});
+  .get( (req, res) => {
+    Photo.findAll()
+      .then( (gallery) => {
+        console.log(gallery);
+        res.render('home', {gallery});
+      })
+      .catch( (err) => {
+        console.log(err);
+      });
+  });
+
+// POST to gallery
+router.route('/gallery')
+  .post( (req, res) => {
+    Photo.create({
+      author: req.body.author,
+      link: req.body.link,
+      description: req.body.description
+    })
+      .then( (data) => {
+        console.log(data);
+        res.end();
+      })
+      .catch( (err) => {
+        console.log(err);
+      });
+  });
+
+// Get by id
+router.route('/gallery/:id')
+  .get( (req, res) => {
+    Photo.findById(parseInt(req.params.id))
+      .then( (photo) => {
+        res.render('photo', {photo});
+      })
+      .catch( (err) => {
+        console.log(err);
+      });
+  })
+  // Update Photo
+  .put( (req, res) => {
+    Photo.update({
+      author: req.body.author,
+      link: req.body.link,
+      description: req.body.description
+    }, {
+      returning: true,
+      where: {
+        id: req.params.id
+      }
+    })
+    .then( (data) => {
+      console.log('Updated photo');
+      res.end();
     })
     .catch( (err) => {
       console.log(err);
     });
-  });
-
-
-// POST to gallery
-router.route('/gallery')
-.post( (req, res) => {
-  Photo.create({
-    author: req.body.author,
-    link: req.body.link,
-    description: req.body.description
   })
+// Delete Photo
+  .delete( (req, res) => {
+    Photo.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
     .then( (data) => {
-      console.log(data);
       res.end();
     })
     .catch( (err) => {
@@ -41,51 +86,17 @@ router.route('/gallery')
     });
   });
 
-// Get by id
-router.route('/gallery/:id')
-.get( (req, res) => {
-  Photo.findById(parseInt(req.params.id))
-    .then( (getPhoto) => {
-      res.render('getPhoto', {getPhoto});
-    })
-    .catch( (err) => {
-      console.log(err);
-    });
+// Send to edit form
+router.route('/gallery/:id/edit')
+  .get( (req, res) => {
+    Photo.findById(parseInt(req.params.id))
+      .then( (editPhoto) => {
+        res.render('edit', {editPhoto});
+      })
+      .catch( (err) => {
+        console.log(err);
+      });
   })
-
-// Edit id
-.put( (req, res) => {
-  Photo.update({
-    author: req.body.author,
-    link: req.body.link,
-    description: req.body.description
-  }, {
-    where: {
-      id: req.params.id
-    }
-  })
-  .then( (data) => {
-    res.end();
-  })
-  .catch( (err) => {
-    console.log(err);
-  });
-})
-
-// Delete by id
-.delete( (req, res) => {
-  Photo.destroy({
-    where: {
-      id: req.params.id
-    }
-  })
-  .then( (data) => {
-    res.end();
-  })
-  .catch( (err) => {
-    console.log(err);
-  });
-});
 
 
 
