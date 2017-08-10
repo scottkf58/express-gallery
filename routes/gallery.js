@@ -8,14 +8,13 @@ router.route('/gallery/new')
     res.render('new');
   });
 
-
-// Get/view gallery
+// Get all photos
 router.route('/')
   .get( (req, res) => {
     Photo.findAll()
-      .then( (gallery) => {
-        console.log(gallery);
-        res.render('home', {gallery});
+      .then( (photos) => {
+        console.log(photos);
+        res.render('home', {photos});
       })
       .catch( (err) => {
         console.log(err);
@@ -32,7 +31,7 @@ router.route('/gallery')
     })
       .then( (data) => {
         console.log(data);
-        res.redirect('/gallery');
+        res.redirect('/');
       })
       .catch( (err) => {
         console.log(err);
@@ -50,6 +49,7 @@ router.route('/gallery/:id')
         console.log(err);
       });
   })
+
   // Update Photo
   .put( (req, res) => {
     Photo.update({
@@ -71,7 +71,8 @@ router.route('/gallery/:id')
     res.redirect(`/gallery/${parseInt(req.params.id)}/edit`);
     res.end();
   })
-// Delete Photo
+
+  // Delete Photo
   .delete( (req, res) => {
     Photo.destroy({
       where: {

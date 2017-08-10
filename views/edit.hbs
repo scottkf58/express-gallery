@@ -1,23 +1,28 @@
 <h1>Edit Photo</h1>
 
-<div>
-  <form action="/gallery/{{id}}?_method=PUT" method="POST">
-      title:<br>
-      <input type="text" name="name" value="{{title}}"><br>
 
-      author:<br>
-      <input type="text" name="author" value="{{author}}" ><br>
+<div class='edit-page'>
+  {{#with editPhoto}}
+    <form action="/gallery/{{id}}" method="POST">
+      <label form="author">Author</label>
+      <input type="text" name="author" placeholder="author">
 
-      link:<br>
-      <input type="text" name="link" value="{{link}}"><br><br>
-      <input type="submit" value="Submit">
-  </form>
+      <label form="link">Link</label>
+      <input type="text" name="link" placeholder="{{link}}">
 
-  <form action="/gallery/{{id}}?_method=DELETE" method="POST">
-       <input type="submit" value="delete">
-  </form>
+      <label form="description">Description</label>
+      <input type="text" name="description" placeholder="description">
 
-  <form action="/gallery" method="GET">
-       <input type="submit" value="view all products">
-  </form>
+      <input type="hidden" name="_method" value="PUT">
+      <input type="submit" value="Edit">
+    </form>
+
+  <img src="{{link}}" alt="">
+  <br>
+  <br>
+  Author: {{author}}
+  <br>
+  <br>
+  Description: {{description}}
+  {{/with}}
 </div>
