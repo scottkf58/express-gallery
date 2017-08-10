@@ -6,9 +6,16 @@ const PORT = process.env.PORT || 3000;
 const db = require('./models');
 const config = require('./config/config.json');
 const galleryRouter = require('./routes/gallery.js');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
 
 const app = express();
 app.use(bp.urlencoded());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(methodOverride(function (req, res) {
