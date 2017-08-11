@@ -3,6 +3,16 @@ const router = express.Router();
 const db = require('../models');
 const Photo = db.Photo;
 
+function userAuthenticated (req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log('User is good');
+    next();
+  } else {
+    console.log('User not good');
+    res.redirect('/login');
+  }
+}
+
 router.route('/gallery/new')
   .get( (req, res) => {
     res.render('new');
