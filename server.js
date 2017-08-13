@@ -7,6 +7,7 @@ const db = require('./models');
 const { Photo, User } = require('./models');
 const config = require('./config/config.json');
 const galleryRouter = require('./routes/gallery.js');
+const createRouter = require('./routes/user.js');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -36,25 +37,25 @@ passport.use(new LocalStrategy(
         return done(null, user);
       } else {
         console.log('Password was incorrect');
-        return done(null, false, { message: 'Incorrect Password' })
+        return done(null, false, { message: 'Incorrect Password' });
       }
     }).catch( (err) => {
       console.log(err);
-      return done(null, false, { message: 'Incorrect Username' })
-    })
+      return done(null, false, { message: 'Incorrect Username' });
+    });
   }
-))
+));
 
 passport.serializeUser(function (user, done) {
   console.log('serializing the user into session');
   done(null, {
     id: user.id,
     username: user.username
-  })
+  });
 });
 
 passport.deserializeUser(function (userId, done) {
-  console.log('adding user information into the req object')
+  console.log('adding user information into the req object');
   User.findOne({
     where :{
       id: userId
@@ -63,27 +64,27 @@ passport.deserializeUser(function (userId, done) {
     return done(null, {
       id: user.id,
       username: user.username
-    })
+    });
   }).catch( (err) => {
     done(err, user);
-  })
+  });
 });
 
 app.use(express.static('public'));
 
-app.get('/login', (req, res) => {
-  res.render('login');
-})
+app.get('/user', (req, res) => {
+  res.render('user');
+});
 
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/secret',
-  failureRedirect: '/login'
-}));
+// app.post('/login', passport.authenticate('local', {
+//   successRedirect: '/gallery',
+//   failureRedirect: '/login'
+// }));
 
-app.get('/secret', userAuthenticated, (req, res) => {
-  console.log(req.user);
-  res.send('This is a secret');
-})
+// app.get('/gallery', userAuthenticated, (req, res) => {
+//   //console.log(req.user);
+//   res.render('gallery');
+// });
 
 function userAuthenticated (req, res, next) {
   if (req.isAuthenticated()) {
@@ -91,7 +92,7 @@ function userAuthenticated (req, res, next) {
     next();
   } else {
     console.log('User not good');
-    res.redirect('/login');
+    res.redirect('/user');
   }
 }
 
@@ -102,11 +103,11 @@ function userAuthenticated (req, res, next) {
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(methodOverride(function (req, res) {
   if(req.body && typeof req.body === 'object' && '_method' in req.body) {
-    var method = req.body._method
-    delete req.body._method
-    return method
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
   }
-}))
+}));
 
 // Set up handlebars
 const hbs = exphbs.create( {
@@ -117,10 +118,10 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 
-
+app.use('/user', createRouter);
 app.use('/', galleryRouter);
 
 const server = app.listen(PORT, () => {
   db.sequelize.sync();
   console.log(`Server running on ${PORT}`);
-})
+});
