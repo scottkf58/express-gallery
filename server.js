@@ -7,7 +7,8 @@ const db = require('./models');
 const { Photo, User } = require('./models');
 const config = require('./config/config.json');
 const galleryRouter = require('./routes/gallery.js');
-const createRouter = require('./routes/user.js');
+const createRouter = require('./routes/create.js');
+const loginRouter = require('./routes/login.js');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -57,7 +58,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (userId, done) {
   console.log('adding user information into the req object');
   User.findOne({
-    where :{
+    where: {
       id: userId
     }
   }).then( (user) => {
@@ -70,22 +71,7 @@ passport.deserializeUser(function (userId, done) {
   });
 });
 
-app.use(express.static('public'));
-
-app.get('/user', (req, res) => {
-  res.render('user');
-});
-
-// app.post('/login', passport.authenticate('local', {
-//   successRedirect: '/gallery',
-//   failureRedirect: '/login'
-// }));
-
-// app.get('/gallery', userAuthenticated, (req, res) => {
-//   //console.log(req.user);
-//   res.render('gallery');
-// });
-
+// Check if user is valid
 function userAuthenticated (req, res, next) {
   if (req.isAuthenticated()) {
     console.log('User is good');
@@ -96,7 +82,7 @@ function userAuthenticated (req, res, next) {
   }
 }
 
-
+app.use(express.static('public'));
 
 
 // Method Override
@@ -117,7 +103,18 @@ const hbs = exphbs.create( {
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/new',
+  failureRedirect: '/user'
+}));
 
+
+app.get('/user', (req, res) => {
+  res.render('user');
+});
+
+// Middleware
+app.use('/user', loginRouter);
 app.use('/user', createRouter);
 app.use('/', galleryRouter);
 
