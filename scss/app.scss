@@ -1,0 +1,49 @@
+.container {
+  font-family: arial;
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  .photos {
+    border-bottom: 1px dotted #000;
+  }
+
+  img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+  }
+
+  @media screen and (min-width: 540px) {
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-between;
+  }
+}
+
+.header-container {
+  font-family: arial;
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  #title {
+    font-size: 4rem;
+    border-top: 1px dotted #000;
+    border-right: 1px dotted #000;
+    padding: 15px;
+  }
+
+  #welcome {
+    border-top: 1px dotted #000;
+    padding: 15px;
+  }
+
+  @media screen and (min-width: 540px) {
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-between;
+  }
+}

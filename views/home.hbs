@@ -1,12 +1,11 @@
-  <div class = "gallery">
-    {{#each photos}}
+<div class ="gallery">
+  {{> login}}
+  {{#each photos}}
       <div class="photos">
-      <h1>Gallery</h1>
         <img class="all-images" id="{{id}}" src="{{link}}">
-        <h3 class="title">{{title}}</h3>
-        <p class="author" >Author: {{author}}</p>
-        <p class="description" >{{description}}</p>
-
+        <div class="author">Author: {{author}}</div>
+        <div class="description">Description: {{description}}</div>
       </div>
-    {{/each}}
-  </div>
+  {{/each}}
+</div>
+

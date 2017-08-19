@@ -6,10 +6,8 @@
   <title>Express Gallery</title>
 </head>
 <body>
-{{#with photo}}
-<h1>photo.hbs</h1>
+  {{#with photo}}
   <div class='photo'>
-
   <img src="{{link}}" alt=""><br>
   <p>Author: {{author}}</p>
   <p>Description: {{description}}</p>
@@ -20,7 +18,7 @@
     </form>
 
     <form action="/gallery/{{id}}" method="POST">
-      <label form="delete"></label>
+      {{!-- <label form="delete"></label> --}}
       <input type="hidden" name="_method" value="PUT">
       <input type="submit" value="Edit">
     </form>

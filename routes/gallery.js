@@ -3,19 +3,16 @@ const router = express.Router();
 const db = require('../models');
 const Photo = db.Photo;
 
-function userAuthenticated (req, res, next) {
-  if (req.isAuthenticated()) {
-    console.log('User is good');
-    next();
-  } else {
-    console.log('User not good');
-    res.redirect('/login');
-  }
-}
-
-router.route('/gallery/new')
+// Send to new form
+router.route('/new')
   .get( (req, res) => {
     res.render('new');
+  });
+
+// Send to create user/login form
+router.route('/user')
+  .get( (req, res) => {
+    res.render('user');
   });
 
 // Get all photos
@@ -23,7 +20,6 @@ router.route('/')
   .get( (req, res) => {
     Photo.findAll()
       .then( (photos) => {
-        console.log(photos);
         res.render('home', {photos});
       })
       .catch( (err) => {
@@ -31,7 +27,7 @@ router.route('/')
       });
   });
 
-// POST to gallery
+// Post to gallery
 router.route('/gallery')
   .post( (req, res) => {
     Photo.create({
@@ -40,7 +36,6 @@ router.route('/gallery')
       description: req.body.description
     })
       .then( (data) => {
-        console.log(data);
         res.redirect('/');
       })
       .catch( (err) => {
@@ -99,18 +94,17 @@ router.route('/gallery/:id')
     });
   });
 
-// Send to edit form
-router.route('/gallery/:id/edit')
-  .get( (req, res) => {
-    Photo.findById(parseInt(req.params.id))
-      .then( (editPhoto) => {
-        res.render('edit', {editPhoto});
-      })
-      .catch( (err) => {
-        console.log(err);
-      });
-  })
-
+   // Send to edit form
+   router.route('/gallery/:id/edit')
+     .get( (req, res) => {
+       Photo.findById(parseInt(req.params.id))
+         .then( (editPhoto) => {
+           res.render('edit', {editPhoto});
+         })
+         .catch( (err) => {
+           console.log(err);
+         });
+     });
 
 
 module.exports = router;

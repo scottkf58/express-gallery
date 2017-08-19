@@ -1,0 +1,37 @@
+.container {
+  font-family: arial;
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem; }
+  .container .photos {
+    border-bottom: 1px dotted #000; }
+  .container img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover; }
+  @media screen and (min-width: 540px) {
+    .container {
+      flex-direction: row;
+      flex-flow: wrap;
+      justify-content: space-between; } }
+
+.header-container {
+  font-family: arial;
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem; }
+  .header-container #title {
+    font-size: 4rem;
+    border-top: 1px dotted #000;
+    border-right: 1px dotted #000;
+    padding: 15px; }
+  .header-container #welcome {
+    border-top: 1px dotted #000;
+    padding: 15px; }
+  @media screen and (min-width: 540px) {
+    .header-container {
+      flex-direction: row;
+      flex-flow: wrap;
+      justify-content: space-between; } }

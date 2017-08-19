@@ -4,7 +4,7 @@ var browserSync = require('browser-sync').create()
 
 // Like live-server
 browserSync.init({
-  //proxy: 'localhost:3000'
+  //proxy: 'localhost:8080'
   server: {
     baseDir: "./public"
   }
@@ -13,7 +13,7 @@ browserSync.init({
 gulp.task('scss', function () {
   return gulp.src('./scss/*.scss')
     .pipe(scss())
-    .pipe(gulp.dest('./public/css'));
+    .pipe(gulp.dest('./public/css/'));
 });
 
 gulp.task('watch', function () {

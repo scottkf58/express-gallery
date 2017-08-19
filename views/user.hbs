@@ -1,15 +1,15 @@
-
-<form action="/user" method="POST">
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <input type="submit" value="Create new user">
-</form>
+<div class="create-user">
+  <form action="/user" method="POST">
+      <input type="text" name="username" placeholder="Username">
+      <input type="password" name="password" placeholder="Password">
+      <input type="submit" value="Create new user">
+  </form>
+</div>
 
 <br>
 <br>
 
-<form action="/login" method="POST">
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <input type="submit" value="Login">
-</form>
+{{> login}}
+
+
+

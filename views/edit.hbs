@@ -8,7 +8,7 @@
       <input type="text" name="author" placeholder="author">
 
       <label form="link">Link</label>
-      <input type="text" name="link" placeholder="{{link}}">
+      <input type="text" name="link" placeholder="link">
 
       <label form="description">Description</label>
       <input type="text" name="description" placeholder="description">
@@ -25,4 +25,9 @@
   <br>
   Description: {{description}}
   {{/with}}
+
+  <div class="add_meta_field">
+    <ul id="meta_fields"></ul>
+    <button id="add_meta_field_button" type="button" >Add Meta Data</button>
+  </div>
 </div>
