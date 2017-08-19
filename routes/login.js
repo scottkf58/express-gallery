@@ -9,25 +9,15 @@ const { User } = db;
 router.route('/')
   .post(passport.authenticate('local', {
     successRedirect: '/new',
-    failureRedirect: '/user'
+    failureRedirect: '/create'
   }));
 
 router.route('/logout')
   .get( (req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/create');
   });
 
-// Check if user is valid
-// function userAuthenticated (req, res, next) {
-//   if (req.isAuthenticated()) {
-//     console.log('User is good');
-//     next();
-//   } else {
-//     console.log('User not good');
-//     res.redirect('/user');
-//   }
-// }
 
 
 module.exports = router;

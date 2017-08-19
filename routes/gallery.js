@@ -3,6 +3,9 @@ const router = express.Router();
 const db = require('../models');
 const Photo = db.Photo;
 
+// const { photoMetas } = require('../collections/photoMeta.js');
+
+
 // Send to new form
 router.route('/new')
   .get( (req, res) => {
@@ -10,9 +13,9 @@ router.route('/new')
   });
 
 // Send to create user/login form
-router.route('/user')
+router.route('/create')
   .get( (req, res) => {
-    res.render('user');
+    res.render('create');
   });
 
 // Get all photos
@@ -20,11 +23,20 @@ router.route('/')
   .get( (req, res) => {
     Photo.findAll()
       .then( (photos) => {
-        res.render('home', {photos});
+        res.render('gallery', {photos});
       })
       .catch( (err) => {
         console.log(err);
       });
+      // mongoDB Stuff
+      // photoMetas().find().toArray()
+      // .then(metas => {
+      //   console.log(metas);
+      // })
+      // .catch( err => {
+      //   console.log(err);
+      // });
+      //
   });
 
 // Post to gallery
@@ -105,6 +117,17 @@ router.route('/gallery/:id')
            console.log(err);
          });
      });
+
+//Check if user is valid
+function userAuthenticated (req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log('User is good');
+    next();
+  } else {
+    console.log('User not good');
+    res.redirect('/user');
+  }
+}
 
 
 module.exports = router;

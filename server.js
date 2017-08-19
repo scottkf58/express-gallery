@@ -17,11 +17,10 @@ const CONFIG = require('./config/config.json');
 
 // Database
 const { Photo, User } = require('./models');
-// const { photoMetas } = require('./public/js/metaFields.js');
+
 const db = require('./models');
 
 const PORT = process.env.PORT || 3000;
-
 
 const app = express();
 app.use(bp.urlencoded());
@@ -58,7 +57,7 @@ passport.use(new LocalStrategy(
               console.log('Username and password correct!');
               return done(null, user);
             } else {
-              console.log('password does not match');
+              console.log('Password does not match');
               return done(null, false, { message: 'Incorrect Password' });
             }
           }).catch( (err) => {
@@ -75,7 +74,7 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function (user, done) {
-  console.log('serializing the user into session');
+  console.log('Serializing the user into session');
   done(null, {
     id: user.id,
     username: user.username
@@ -83,7 +82,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (userId, done) {
-  console.log('adding user information into the req object');
+  console.log('Adding user information into the req object');
   User.findOne({
     where: {
       id: userId
@@ -121,7 +120,7 @@ app.set('view engine', 'hbs');
 
 
 app.use('/login', loginRouter);
-app.use('/user', createRouter);
+app.use('/create', createRouter);
 app.use('/', galleryRouter);
 
 
