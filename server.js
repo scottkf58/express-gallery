@@ -25,6 +25,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(bp.urlencoded());
 
+// Redis Sessions
 app.use(session ({
   store: new RedisStore(),
   secret: CONFIG.SESSION_SECRET,
@@ -41,8 +42,8 @@ app.use(passport.session());
 passport.use(new LocalStrategy(
   // Client side username, password
   function (username, password, done) {
-    console.log('client-side-username', username);
-    console.log('client-side-password', password);
+    //console.log('client-side-username', username);
+    //console.log('client-side-password', password);
 
     // Sequelize queries, using database to authenticate
     User.findOne({
@@ -74,15 +75,12 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function (user, done) {
-  console.log('Serializing the user into session');
-  done(null, {
-    id: user.id,
-    username: user.username
-  });
+  //console.log('Serializing the user into session');
+  done(null, user.id);
 });
 
 passport.deserializeUser(function (userId, done) {
-  console.log('Adding user information into the req object');
+  //console.log('Adding user information into the req object');
   User.findOne({
     where: {
       id: userId
@@ -97,9 +95,7 @@ passport.deserializeUser(function (userId, done) {
   });
 });
 
-
 app.use(express.static('public'));
-
 
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(methodOverride(function (req, res) {
@@ -109,7 +105,6 @@ app.use(methodOverride(function (req, res) {
     return method;
   }
 }));
-
 
 const hbs = exphbs.create( {
   defaultLayout : 'main',

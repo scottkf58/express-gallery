@@ -1,15 +1,27 @@
 <div class ="gallery">
   {{> login}}
   <br>
-  <div class="user">Welcome, {{req.user.username}}</div>
+  <div class="user">Welcome, {{user.username}}</div>
   <a href="/login/logout">Log Out</a>
+
+  <div class="main-photo">
+    {{#with photos.[0]}}
+      <img src="{{link}}" alt="">
+    {{/with}}
+  </div>
+
   {{#each photos}}
-      <div class="photos">
+    <a href="/gallery/{{id}}">
         <img class="all-images" id="{{id}}" src="{{link}}">
+    </a>
+      <div class="photos">
         <div class="id">ID: {{id}}</div>
         <div class="author">Author: {{author}}</div>
         <div class="description">Description: {{description}}</div>
       </div>
   {{/each}}
 </div>
+
+
+
 

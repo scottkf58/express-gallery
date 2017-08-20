@@ -37,21 +37,6 @@ router.route('/')
     res.redirect('/');
   });
 
-// router.route('/')
-//   .post( (req, res) => {
-//     console.log(req.body);
-//     User.create({
-//       username: req.body.username,
-//       password: req.body.password
-//     })
-//     .then( (data) => {
-//       res.redirect('/');
-//     })
-//     .catch( (err) => {
-//       console.log(err);
-//     });
-//   });
-
 
 module.exports = router;
 

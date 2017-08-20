@@ -1,14 +1,25 @@
-  <h1>Add New Photo</h1>
+<h1>Add New Photo</h1>
 
-  <form action="/gallery" method="post">
+<form action="/gallery" method="post">
 
-    author:<br>
-    <input type="text" id="author" name="author" placeholder="author"><br>
+  author:<br>
+  <input type="text" id="author" name="author" placeholder="author"><br>
 
-    link:<br>
-    <input type="text" id="link" name="link" placeholder="link"><br>
+  link:<br>
+  <input type="text" id="link" name="link" placeholder="link"><br>
 
-    description:<br>
-    <input type="text" name="description" placeholder="description"><br><br>
-    <input type="submit" value="Submit">
-  </form>
+  description:<br>
+  <input type="text" name="description" placeholder="description"><br>
+  <div class="add_meta_field">
+    <ul id="meta_fields"></ul>
+    <button id="add_meta_field_button" type="button" >Add Meta Data</button>
+  </div>
+  <br>
+  <input type="submit" value="Submit">
+</form>
+  <br>
+<form action="/" method="GET">
+  <input type="submit" value="Gallery">
+</form>
+
+<script src="/js/metaFields.js"></script>

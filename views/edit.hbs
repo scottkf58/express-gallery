@@ -4,16 +4,23 @@
   {{#with editPhoto}}
     <form action="/gallery/{{id}}" method="POST">
       <label form="author">Author</label>
-      <input type="text" name="author" placeholder="author">
+      <input type="text" name="author" value="{{author}}">
 
-      <label form="link">Link</label>
-      <input type="text" name="link" placeholder="link">
+{{!--       <label form="link">Link</label>
+      <input type="text" name="link" value="{{link}}"> --}}
 
       <label form="description">Description</label>
-      <input type="text" name="description" placeholder="description">
+      <input type="text" name="description" value="{{description}}">
 
+      <div class="add_meta_field">
+        <ul id="meta_fields"></ul>
+        <button id="add_meta_field_button" type="button" >Add Meta Data</button>
+      </div>
       <input type="hidden" name="_method" value="PUT">
       <input type="submit" value="Edit">
+    </form>
+    <form action="/" method="GET">
+      <input type="submit" value="Gallery">
     </form>
 
   <img src="{{link}}" alt="">
@@ -24,9 +31,6 @@
   <br>
   Description: {{description}}
   {{/with}}
-
-  <div class="add_meta_field">
-    <ul id="meta_fields"></ul>
-    <button id="add_meta_field_button" type="button" >Add Meta Data</button>
-  </div>
 </div>
+
+<script src="/js/metaFields.js"></script>

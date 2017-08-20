@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models');
 const Photo = db.Photo;
 
-// const { photoMetas } = require('../collections/photoMeta.js');
+const { photoMetas } = require('../collections/photoMeta.js');
 
 
 // Send to new form
@@ -21,42 +21,48 @@ router.route('/create')
 // Get all photos
 router.route('/')
   .get( (req, res) => {
-    Photo.findAll()
+    Photo.findAll({
+      order: [ [ "createdAt", "DESC"]]
+    })
       .then( (photos) => {
         res.render('gallery', {photos});
       })
       .catch( (err) => {
         console.log(err);
       });
-      // mongoDB Stuff
-      // photoMetas().find().toArray()
-      // .then(metas => {
-      //   console.log(metas);
-      // })
-      // .catch( err => {
-      //   console.log(err);
-      // });
-      //
+      photoMetas().find().toArray()
+      .then(metas => {
+        console.log(metas);
+      })
+      .catch( err => {
+        console.log(err);
+      });
+
   });
 
 // Post to gallery
 router.route('/gallery')
   .post( (req, res) => {
+    console.log(req.body);
     Photo.create({
       author: req.body.author,
       link: req.body.link,
       description: req.body.description
     })
-      .then( (data) => {
+    .then( (data)=> {
+        console.log("Some data",data);
+        let metaObj = req.body.meta;
+        metaObj.id = data.dataValues.id;
+        photoMetas().insert(metaObj);
         res.redirect('/');
-      })
-      .catch( (err) => {
-        console.log(err);
-      });
+    })
+    .catch( (err) => {
+      console.log(err);
+    });
   });
 
 // Get by id
-router.route('/gallery/:id')
+router.route('/gallery/:id', userAuthenticated)
   .get( (req, res) => {
     Photo.findById(parseInt(req.params.id))
       .then( (photo) => {
@@ -69,6 +75,7 @@ router.route('/gallery/:id')
 
   // Update Photo
   .put( (req, res) => {
+    console.log(req.body);
     Photo.update({
       author: req.body.author,
       link: req.body.link,
@@ -107,7 +114,7 @@ router.route('/gallery/:id')
   });
 
    // Send to edit form
-   router.route('/gallery/:id/edit')
+   router.route('/gallery/:id/edit', userAuthenticated)
      .get( (req, res) => {
        Photo.findById(parseInt(req.params.id))
          .then( (editPhoto) => {
@@ -118,7 +125,7 @@ router.route('/gallery/:id')
          });
      });
 
-//Check if user is valid
+// Check if user is valid
 function userAuthenticated (req, res, next) {
   if (req.isAuthenticated()) {
     console.log('User is good');
