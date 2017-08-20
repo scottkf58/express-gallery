@@ -49,7 +49,6 @@ router.route('/gallery')
       description: req.body.description
     })
     .then( (data)=> {
-        console.log("Some data",data);
         let metaObj = req.body.meta;
         metaObj.id = data.dataValues.id;
         photoMetas().insert(metaObj);
