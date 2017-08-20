@@ -30,14 +30,13 @@ router.route('/')
       .catch( (err) => {
         console.log(err);
       });
-      photoMetas().find().toArray()
-      .then(metas => {
-        console.log(metas);
-      })
-      .catch( err => {
-        console.log(err);
-      });
-
+      // photoMetas().find().toArray()
+      // .then(metas => {
+      //   console.log(metas);
+      // })
+      // .catch( err => {
+      //   console.log(err);
+      // });
   });
 
 // Post to gallery
