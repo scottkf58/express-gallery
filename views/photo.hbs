@@ -9,8 +9,8 @@
   {{#with photo}}
   <div class='photo'>
   <img src="{{link}}" alt=""><br>
-  <p>Author: {{author}}</p>
-  <p>Description: {{description}}</p>
+  <div class="author">Author: {{author}}</div>
+  <div class="description">Description: {{description}}</div>
     <form action="/gallery/{{id}}" method="POST">
       <input type="hidden" name="_method" value="PUT">
       <input type="submit" value="Edit">
